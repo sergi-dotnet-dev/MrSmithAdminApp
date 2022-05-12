@@ -83,6 +83,7 @@
             this.subIdTextBox.Name = "subIdTextBox";
             this.subIdTextBox.Size = new System.Drawing.Size(125, 27);
             this.subIdTextBox.TabIndex = 5;
+            this.subIdTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyDigitKeyAllowed_KeyPress);
             // 
             // subPhoneNumberTextBox
             // 
@@ -91,6 +92,7 @@
             this.subPhoneNumberTextBox.Name = "subPhoneNumberTextBox";
             this.subPhoneNumberTextBox.Size = new System.Drawing.Size(125, 27);
             this.subPhoneNumberTextBox.TabIndex = 8;
+            this.subPhoneNumberTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyDigitKeyAllowed_KeyPress);
             // 
             // subLastNameTextBox
             // 
@@ -99,6 +101,7 @@
             this.subLastNameTextBox.Name = "subLastNameTextBox";
             this.subLastNameTextBox.Size = new System.Drawing.Size(125, 27);
             this.subLastNameTextBox.TabIndex = 7;
+            this.subLastNameTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyCharKeyAllowed_KeyPress);
             // 
             // subNameTextBox
             // 
@@ -107,6 +110,7 @@
             this.subNameTextBox.Name = "subNameTextBox";
             this.subNameTextBox.Size = new System.Drawing.Size(125, 27);
             this.subNameTextBox.TabIndex = 6;
+            this.subNameTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyCharKeyAllowed_KeyPress);
             // 
             // subStartDateChooseCalendar
             // 
