@@ -18,14 +18,26 @@ internal static class QueryHolder
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = sql;
 
-            cmd.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = subscriber.Id;
-            cmd.Parameters.Add("@name", System.Data.SqlDbType.VarChar).Value = subscriber.Name;
-            cmd.Parameters.Add("@lastName", System.Data.SqlDbType.VarChar).Value = subscriber.LastName;
-            cmd.Parameters.Add("@phoneNumber", System.Data.SqlDbType.Char).Value = subscriber.PhoneNumber;
-            cmd.Parameters.Add("@isExpired", System.Data.SqlDbType.Bit).Value = subscriber.IsExpired;
-            cmd.Parameters.Add("@expiriationDate", System.Data.SqlDbType.SmallDateTime).Value = subscriber.SubExpiriationDate;
+            try
+            {
+                cmd.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = subscriber.Id;
+                cmd.Parameters.Add("@name", System.Data.SqlDbType.VarChar).Value = subscriber.Name;
+                cmd.Parameters.Add("@lastName", System.Data.SqlDbType.VarChar).Value = subscriber.LastName;
+                cmd.Parameters.Add("@phoneNumber", System.Data.SqlDbType.Char).Value = subscriber.PhoneNumber;
+                cmd.Parameters.Add("@isExpired", System.Data.SqlDbType.Bit).Value = subscriber.IsExpired;
+                cmd.Parameters.Add("@expiriationDate", System.Data.SqlDbType.SmallDateTime).Value = subscriber.SubExpiriationDate;
 
-            cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Пользователь успешно добавлен в базу");
+            }
+            catch (System.Data.SqlClient.SqlException sqlEx)
+            {
+                MessageBox.Show("Пользователь с таким идентификационным номером уже существует\n" +
+                                  "Используйте предложенный идентификатор", "Ошибка внесения в базу", MessageBoxButtons.OK);
+
+
+            }
+
         }
     }
     public static async Task Read(Int32 subId)
@@ -111,7 +123,7 @@ internal static class QueryHolder
                         DateTime subExpiriationDate = reader.GetDateTime(5);
 
                         UserModel subscriber = new UserModel(id, name, lastname, phoneNumber, subExpiriationDate, isExpired);
-                        if (File.Exists("lastSub.json")) 
+                        if (File.Exists("lastSub.json"))
                             File.Delete("lastSub.json");
                         using (FileStream fs = new FileStream("lastSub.json", FileMode.OpenOrCreate))
                             await JsonSerializer.SerializeAsync(fs, subscriber);
