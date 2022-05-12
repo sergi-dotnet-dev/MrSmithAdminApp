@@ -94,6 +94,7 @@ namespace SubscriptionUserAdministration.Core.Forms
             this.nameTextBox.Size = new System.Drawing.Size(125, 27);
             this.nameTextBox.TabIndex = 6;
             this.nameTextBox.Text = sub.Name;
+            this.nameTextBox.KeyPress += new KeyPressEventHandler(this.OnlyCharKeyAllowed_KeyPress);
             // 
             // lastNameTextBox
             // 
@@ -102,6 +103,7 @@ namespace SubscriptionUserAdministration.Core.Forms
             this.lastNameTextBox.Size = new System.Drawing.Size(125, 27);
             this.lastNameTextBox.TabIndex = 7;
             this.lastNameTextBox.Text = sub.LastName;
+            this.lastNameTextBox.KeyPress += new KeyPressEventHandler(this.OnlyCharKeyAllowed_KeyPress);
             // 
             // phoneNumberTextBox
             // 
@@ -110,6 +112,7 @@ namespace SubscriptionUserAdministration.Core.Forms
             this.phoneNumberTextBox.Size = new System.Drawing.Size(125, 27);
             this.phoneNumberTextBox.TabIndex = 8;
             this.phoneNumberTextBox.Text = sub.PhoneNumber;
+            this.phoneNumberTextBox.KeyPress += new KeyPressEventHandler(this.OnlyDigitKeyAllowed_KeyPress);
             // 
             // expiriationDateCalendar
             // 

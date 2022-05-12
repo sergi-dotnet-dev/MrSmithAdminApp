@@ -1,5 +1,6 @@
 ﻿using SubscriptionUserAdministration.Core.Models;
 using SubscriptionUserAdministration.Core.Queries;
+using System.Text.RegularExpressions;
 
 namespace SubscriptionUserAdministration.Core.Forms
 {
@@ -23,6 +24,25 @@ namespace SubscriptionUserAdministration.Core.Forms
         {
             if (expiriationDateCalendar.SelectionStart < sub.SubExpiriationDate)
                 expiriationDateCalendar.SetDate(sub.SubExpiriationDate);
+        }
+        private void OnlyDigitKeyAllowed_KeyPress(object sender, KeyPressEventArgs args)
+        {
+            if (args.KeyChar <= 47 || args.KeyChar >= 58)
+            {
+                if (args.KeyChar == 8)
+                {
+                    args.Handled = false;
+                    return;
+                }
+                args.Handled = true;
+            }
+        }
+
+        private void OnlyCharKeyAllowed_KeyPress(Object sender, KeyPressEventArgs args)
+        {
+            String str = args.KeyChar.ToString();
+            if (!Regex.Match(str, @"[a-zA-ZА-Яа-я\b]").Success)
+                args.Handled = true;
         }
     }
 }
