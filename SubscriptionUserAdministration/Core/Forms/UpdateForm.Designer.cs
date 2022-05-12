@@ -140,6 +140,7 @@ namespace SubscriptionUserAdministration.Core.Forms
             this.Controls.Add(this.backButton);
             this.Controls.Add(this.updateButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.CenterToScreen();
             this.Name = "UpdateForm";
             this.Text = "Мистер Смит";
             this.ResumeLayout(false);

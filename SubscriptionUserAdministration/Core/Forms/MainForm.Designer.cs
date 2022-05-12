@@ -95,6 +95,7 @@ partial class MainForm
             this.Controls.Add(this.passwordTextBox);
             this.Controls.Add(this.loginTextBox);
             this.Controls.Add(this.authorizationLabel);
+            this.CenterToScreen();
             this.Name = "MainForm";
             this.Text = "Мистер Смит";
             this.Load += new System.EventHandler(this.MainForm_Load);

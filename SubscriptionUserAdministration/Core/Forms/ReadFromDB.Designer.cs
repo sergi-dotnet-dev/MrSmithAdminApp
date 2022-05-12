@@ -172,6 +172,7 @@ sealed partial class ReadFromDB
             this.Controls.Add(this.idValueLabel);
             this.Controls.Add(this.idLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.CenterToScreen();
             this.Name = "ReadFromDB";
             this.Text = "Мистер Смит";
             this.Shown += new System.EventHandler(this.ReadFromDB_Shown);

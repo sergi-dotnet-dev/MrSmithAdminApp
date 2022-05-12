@@ -171,6 +171,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.CenterToScreen();
             this.Name = "AdministrationForm";
             this.Text = "Мистер Смит";
             this.Shown += new System.EventHandler(this.AdministrationForm_Shown);
