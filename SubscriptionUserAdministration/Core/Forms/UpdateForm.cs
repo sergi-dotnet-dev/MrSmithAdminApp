@@ -15,8 +15,15 @@ namespace SubscriptionUserAdministration.Core.Forms
 
         private async void UpdateButton_Click(object sender, EventArgs args)
         {
-            await QueryHolder.Update(new UserModel(sub.Id, nameTextBox.Text, lastNameTextBox.Text, phoneNumberTextBox.Text
-                , expiriationDateCalendar.SelectionStart, sub.IsExpired));
+            Int32 id = sub.Id;
+            String name = nameTextBox.Text.Trim();
+            String lastName = lastNameTextBox.Text.Trim();
+            String phoneNumber = phoneNumberTextBox.Text.Trim();
+            DateTime subExpiriationDate = expiriationDateCalendar.SelectionStart;
+            Boolean isExpired = sub.IsExpired;
+
+            await QueryHolder.Update(new UserModel(id, name, lastName, phoneNumber, subExpiriationDate, isExpired));
+            MessageBox.Show("Данные успешно обновлены");
             Close();
         }
         private void BackButton_Click(object sender, EventArgs args) => Close();

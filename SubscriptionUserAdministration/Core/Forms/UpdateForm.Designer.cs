@@ -120,6 +120,7 @@ namespace SubscriptionUserAdministration.Core.Forms
             this.expiriationDateCalendar.Name = "expiriationDateCalendar";
             this.expiriationDateCalendar.TabIndex = 9;
             this.expiriationDateCalendar.SetDate(sub.SubExpiriationDate);
+            this.expiriationDateCalendar.MaxSelectionCount = 1;
             this.expiriationDateCalendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.DateChangedByUser);
             // 
             // UpdateForm
