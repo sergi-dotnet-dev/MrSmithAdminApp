@@ -1,4 +1,6 @@
-﻿using SubscriptionUserAdministration.Core.Queries;
+﻿using SubscriptionUserAdministration.Core.Models;
+using SubscriptionUserAdministration.Core.Queries;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace SubscriptionUserAdministration.Core.Forms
@@ -9,10 +11,28 @@ namespace SubscriptionUserAdministration.Core.Forms
         {
             InitializeComponent();
         }
-
-        private void AdministrationForm_Load(object sender, EventArgs args)
+        private async void InitializeSubscriber()
         {
+            if (!File.Exists("lastSub.json"))
+            {
+                this.currentSubInDBLabel.Text = String.Empty;
+                return;
+            }
+            using (FileStream fs = new FileStream("lastSub.json", FileMode.Open))
+            {
+                UserModel? sub = await JsonSerializer.DeserializeAsync<UserModel>(fs);
 
+                var currentSubCount = (sub.Id + 1).ToString();
+                this.currentSubInDBLabel.Text = $"Количество пользователей в базе: {currentSubCount}\n" +
+                    $"Идентификатор нового - {currentSubCount}";
+                this.subIdTextBox.Text = currentSubCount;
+            }
+            File.Delete("lastSub.json");
+        }
+        private async void AdministrationForm_Shown(object sender, EventArgs args)
+        {
+            await QueryHolder.Read();
+            InitializeSubscriber();
         }
 
         private async void CreateButton_Click(object sender, EventArgs args)
@@ -89,7 +109,6 @@ namespace SubscriptionUserAdministration.Core.Forms
                 }
                 args.Handled = true;
             }
-
         }
 
         private void OnlyCharKeyAllowed_KeyPress(Object sender, KeyPressEventArgs args)

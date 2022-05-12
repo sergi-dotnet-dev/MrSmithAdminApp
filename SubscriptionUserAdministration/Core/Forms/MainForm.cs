@@ -2,8 +2,8 @@ namespace SubscriptionUserAdministration.Core.Forms;
 
 public partial class MainForm : Form
 {
-    private static string Login = "admin";
-    private static string Password = "99118";
+    private static readonly string Login = "admin";
+    private static readonly string Password = "99118";
     public MainForm()
     {
         InitializeComponent();
@@ -20,8 +20,7 @@ public partial class MainForm : Form
         {
             this.Visible = false;
             AdministrationForm administrationForm = new AdministrationForm();
-            administrationForm.Visible = false;
-            administrationForm.ShowDialog();
+            administrationForm.Show();
         }
         loginTextBox.Clear();
         passwordTextBox.Clear();

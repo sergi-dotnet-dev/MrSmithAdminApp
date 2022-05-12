@@ -50,9 +50,10 @@ internal static class QueryHolder
                     DateTime subExpiriationDate = reader.GetDateTime(5);
 
                     UserModel subscriber = new UserModel(id, name, lastname, phoneNumber, subExpiriationDate, isExpired);
+                    if (File.Exists("subscriber.json"))
+                        File.Delete("subscriber.json");
                     using (FileStream fs = new FileStream("subscriber.json", FileMode.OpenOrCreate))
                         await JsonSerializer.SerializeAsync(fs, subscriber);
-
                 }
             }
         }
@@ -79,11 +80,48 @@ internal static class QueryHolder
                     DateTime subExpiriationDate = reader.GetDateTime(5);
 
                     UserModel subscriber = new UserModel(id, name, lastname, phoneNumber, subExpiriationDate, isExpired);
+                    if (File.Exists("subscriber.json"))
+                        File.Delete("subscriber.json");
                     using (FileStream fs = new FileStream("subscriber.json", FileMode.OpenOrCreate))
                         await JsonSerializer.SerializeAsync(fs, subscriber);
-
                 }
             }
+        }
+    }
+    public static async Task Read()
+    {
+        SqlConnection? conn = DBUtils.GetConnection();
+        await conn.OpenAsync();
+        String sql = @$"select top(1) * from Subscribers order by Subscribers.Id desc";
+
+        SqlCommand command = new SqlCommand(sql, conn);
+        try
+        {
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
+            {
+                if (reader.HasRows)
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        Int32 id = reader.GetInt32(0);
+                        String name = reader.GetString(1);
+                        String lastname = reader.GetString(2);
+                        String phoneNumber = reader.GetString(3);
+                        Boolean isExpired = reader.GetBoolean(4);
+                        DateTime subExpiriationDate = reader.GetDateTime(5);
+
+                        UserModel subscriber = new UserModel(id, name, lastname, phoneNumber, subExpiriationDate, isExpired);
+                        if (File.Exists("lastSub.json")) 
+                            File.Delete("lastSub.json");
+                        using (FileStream fs = new FileStream("lastSub.json", FileMode.OpenOrCreate))
+                            await JsonSerializer.SerializeAsync(fs, subscriber);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"sd");
         }
     }
     public static async Task Update(UserModel subscriber)

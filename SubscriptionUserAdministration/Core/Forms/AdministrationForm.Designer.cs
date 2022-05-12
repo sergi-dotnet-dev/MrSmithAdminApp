@@ -29,12 +29,13 @@
             this.subStartDateChooseCalendar = new System.Windows.Forms.MonthCalendar();
             this.createButton = new System.Windows.Forms.Button();
             this.readButton = new System.Windows.Forms.Button();
+            this.currentSubInDBLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // subID
             // 
             this.subID.AutoSize = true;
-            this.subID.Location = new System.Drawing.Point(32, 72);
+            this.subID.Location = new System.Drawing.Point(47, 114);
             this.subID.Name = "subID";
             this.subID.Size = new System.Drawing.Size(111, 20);
             this.subID.TabIndex = 0;
@@ -43,7 +44,7 @@
             // subStartDate
             // 
             this.subStartDate.AutoSize = true;
-            this.subStartDate.Location = new System.Drawing.Point(399, 60);
+            this.subStartDate.Location = new System.Drawing.Point(414, 102);
             this.subStartDate.Name = "subStartDate";
             this.subStartDate.Size = new System.Drawing.Size(217, 20);
             this.subStartDate.TabIndex = 1;
@@ -52,7 +53,7 @@
             // subPhoneNumber
             // 
             this.subPhoneNumber.AutoSize = true;
-            this.subPhoneNumber.Location = new System.Drawing.Point(32, 207);
+            this.subPhoneNumber.Location = new System.Drawing.Point(47, 249);
             this.subPhoneNumber.Name = "subPhoneNumber";
             this.subPhoneNumber.Size = new System.Drawing.Size(127, 20);
             this.subPhoneNumber.TabIndex = 2;
@@ -61,7 +62,7 @@
             // subLastName
             // 
             this.subLastName.AutoSize = true;
-            this.subLastName.Location = new System.Drawing.Point(32, 161);
+            this.subLastName.Location = new System.Drawing.Point(47, 203);
             this.subLastName.Name = "subLastName";
             this.subLastName.Size = new System.Drawing.Size(73, 20);
             this.subLastName.TabIndex = 3;
@@ -70,7 +71,7 @@
             // subName
             // 
             this.subName.AutoSize = true;
-            this.subName.Location = new System.Drawing.Point(32, 118);
+            this.subName.Location = new System.Drawing.Point(47, 160);
             this.subName.Name = "subName";
             this.subName.Size = new System.Drawing.Size(39, 20);
             this.subName.TabIndex = 4;
@@ -78,7 +79,7 @@
             // 
             // subIdTextBox
             // 
-            this.subIdTextBox.Location = new System.Drawing.Point(216, 65);
+            this.subIdTextBox.Location = new System.Drawing.Point(231, 107);
             this.subIdTextBox.MaxLength = 999;
             this.subIdTextBox.Name = "subIdTextBox";
             this.subIdTextBox.Size = new System.Drawing.Size(125, 27);
@@ -87,7 +88,7 @@
             // 
             // subPhoneNumberTextBox
             // 
-            this.subPhoneNumberTextBox.Location = new System.Drawing.Point(216, 204);
+            this.subPhoneNumberTextBox.Location = new System.Drawing.Point(231, 246);
             this.subPhoneNumberTextBox.MaxLength = 11;
             this.subPhoneNumberTextBox.Name = "subPhoneNumberTextBox";
             this.subPhoneNumberTextBox.Size = new System.Drawing.Size(125, 27);
@@ -96,7 +97,7 @@
             // 
             // subLastNameTextBox
             // 
-            this.subLastNameTextBox.Location = new System.Drawing.Point(216, 154);
+            this.subLastNameTextBox.Location = new System.Drawing.Point(231, 196);
             this.subLastNameTextBox.MaxLength = 50;
             this.subLastNameTextBox.Name = "subLastNameTextBox";
             this.subLastNameTextBox.Size = new System.Drawing.Size(125, 27);
@@ -105,7 +106,7 @@
             // 
             // subNameTextBox
             // 
-            this.subNameTextBox.Location = new System.Drawing.Point(216, 115);
+            this.subNameTextBox.Location = new System.Drawing.Point(231, 157);
             this.subNameTextBox.MaxLength = 50;
             this.subNameTextBox.Name = "subNameTextBox";
             this.subNameTextBox.Size = new System.Drawing.Size(125, 27);
@@ -114,14 +115,14 @@
             // 
             // subStartDateChooseCalendar
             // 
-            this.subStartDateChooseCalendar.Location = new System.Drawing.Point(399, 89);
+            this.subStartDateChooseCalendar.Location = new System.Drawing.Point(414, 131);
             this.subStartDateChooseCalendar.MaxSelectionCount = 1;
             this.subStartDateChooseCalendar.Name = "subStartDateChooseCalendar";
             this.subStartDateChooseCalendar.TabIndex = 9;
             // 
             // createButton
             // 
-            this.createButton.Location = new System.Drawing.Point(32, 290);
+            this.createButton.Location = new System.Drawing.Point(47, 332);
             this.createButton.Name = "createButton";
             this.createButton.Size = new System.Drawing.Size(94, 29);
             this.createButton.TabIndex = 10;
@@ -131,7 +132,7 @@
             // 
             // readButton
             // 
-            this.readButton.Location = new System.Drawing.Point(163, 290);
+            this.readButton.Location = new System.Drawing.Point(178, 332);
             this.readButton.Name = "readButton";
             this.readButton.Size = new System.Drawing.Size(94, 29);
             this.readButton.TabIndex = 11;
@@ -139,11 +140,21 @@
             this.readButton.UseVisualStyleBackColor = true;
             this.readButton.Click += new System.EventHandler(this.ReadButton_Click);
             // 
+            // currentSubInDBLabel
+            // 
+            this.currentSubInDBLabel.AutoSize = true;
+            this.currentSubInDBLabel.Location = new System.Drawing.Point(47, 25);
+            this.currentSubInDBLabel.Name = "currentSubInDBLabel";
+            this.currentSubInDBLabel.Size = new System.Drawing.Size(50, 20);
+            this.currentSubInDBLabel.TabIndex = 12;
+            this.currentSubInDBLabel.Text = "label1";
+            // 
             // AdministrationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(640, 385);
+            this.ClientSize = new System.Drawing.Size(686, 422);
+            this.Controls.Add(this.currentSubInDBLabel);
             this.Controls.Add(this.readButton);
             this.Controls.Add(this.createButton);
             this.Controls.Add(this.subStartDateChooseCalendar);
@@ -162,6 +173,7 @@
             this.MinimizeBox = false;
             this.Name = "AdministrationForm";
             this.Text = "Мистер Смит";
+            this.Shown += new System.EventHandler(this.AdministrationForm_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -181,4 +193,5 @@
         private MonthCalendar subStartDateChooseCalendar;
         private Button createButton;
         private Button readButton;
-    }
+    private Label currentSubInDBLabel;
+}

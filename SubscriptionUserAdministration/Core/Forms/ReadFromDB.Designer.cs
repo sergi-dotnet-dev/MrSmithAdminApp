@@ -128,6 +128,7 @@ sealed partial class ReadFromDB
             this.UpdateButton.TabIndex = 10;
             this.UpdateButton.Text = "Изменить";
             this.UpdateButton.UseVisualStyleBackColor = true;
+            this.UpdateButton.Enabled = true;
             this.UpdateButton.Click += new System.EventHandler(this.UpdateButton_Click);
             // 
             // DeleteButton
@@ -138,6 +139,7 @@ sealed partial class ReadFromDB
             this.DeleteButton.TabIndex = 11;
             this.DeleteButton.Text = "Удалить";
             this.DeleteButton.UseVisualStyleBackColor = true;
+            this.DeleteButton.Enabled = true;
             this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
             // BackButton
@@ -172,7 +174,7 @@ sealed partial class ReadFromDB
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ReadFromDB";
             this.Text = "Мистер Смит";
-            this.Load += new System.EventHandler(this.ReadFromDB_Load);
+            this.Shown += new System.EventHandler(this.ReadFromDB_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
