@@ -3,6 +3,7 @@ using SubscriptionUserAdministration.Core.Queries;
 using System.Text.Json;
 
 namespace SubscriptionUserAdministration.Core.Forms;
+
 public sealed partial class ReadFromDB : Form
 {
     public ReadFromDB()
@@ -45,7 +46,10 @@ public sealed partial class ReadFromDB : Form
 
         DialogResult dialogResult = MessageBox.Show($"Удалить пользователя?:\n{subscriber.Id}\t{subscriber.Name}\t{subscriber.LastName}", "Подтверждение", MessageBoxButtons.OKCancel);
         if (dialogResult == DialogResult.OK)
+        {
             await QueryHolder.Delete(subscriber);
+            MessageBox.Show("Пользователь успешно удален");
+        }
         Close();
         Dispose();
     }
