@@ -10,32 +10,20 @@ namespace SubscriptionUserAdministration.Core.Forms
         public AdministrationForm()
         {
             InitializeComponent();
+            UpdateSubCount();
         }
-        private async void InitializeSubscriber()
+        public void UpdateSubCount()
         {
-            if (!File.Exists("lastSub.json"))
-            {
-                this.currentSubInDBLabel.Text = String.Empty;
-                return;
-            }
-            using (FileStream fs = new FileStream("lastSub.json", FileMode.Open))
-            {
-                UserModel? sub = await JsonSerializer.DeserializeAsync<UserModel>(fs);
+            Int32 minFreeID = QueryHolder.GetMinFreeId();
 
-                var currentSubCount = (sub.Id + 1).ToString();
-                this.currentSubInDBLabel.Text = $"Количество пользователей в базе: {currentSubCount}\n" +
-                    $"Идентификатор нового - {currentSubCount}";
-                this.subIdTextBox.Text = currentSubCount;
-            }
-            File.Delete("lastSub.json");
-        }
-        private async void AdministrationForm_Shown(object sender, EventArgs args)
-        {
-            await QueryHolder.Read();
-            InitializeSubscriber();
-        }
+            if (minFreeID == 0)
+                this.currentSubInDBLabel.Text = $"Подписичков пока нет :(\n Идентификатор нового - 0";
+            else
+                currentSubInDBLabel.Text = $"Ближайший свободный идентификатор: {minFreeID}\n Пожалуйста, воспользуйтесь им";
 
-        private async void CreateButton_Click(object sender, EventArgs args)
+            subIdTextBox.Text = minFreeID.ToString();
+        }
+        private async void CreateButton_Click(Object sender, EventArgs args)
         {
             if (String.IsNullOrEmpty(subIdTextBox.Text) || String.IsNullOrEmpty(subNameTextBox.Text)
                 || String.IsNullOrEmpty(subLastNameTextBox.Text) || String.IsNullOrEmpty(subPhoneNumberTextBox.Text)
@@ -60,6 +48,8 @@ namespace SubscriptionUserAdministration.Core.Forms
                 DateTime expiriationDate = subStartDateChooseCalendar.SelectionStart.AddDays(30);
 
                 await QueryHolder.Create(new Models.UserModel(id, name, lastName, phoneNumber, expiriationDate));
+                await QueryHolder.Pop(id);
+                UpdateSubCount();
 
                 subIdTextBox.Clear();
                 subNameTextBox.Clear();
@@ -68,15 +58,20 @@ namespace SubscriptionUserAdministration.Core.Forms
                 subStartDateChooseCalendar.SelectionStart = DateTime.Now;
             }
         }
-        private async void ReadButton_Click(object sender, EventArgs args)
+        private void ReadButton_Click(object sender, EventArgs args)
         {
             if (!String.IsNullOrEmpty(subIdTextBox.Text))
             {
                 Int32 id = Convert.ToInt32(subIdTextBox.Text.Trim());
                 subIdTextBox.Clear();
 
-                await QueryHolder.Read(id);
-                ReadFromDB readFromDB = new ReadFromDB();
+                var subscriber = QueryHolder.Read(id);
+                if (String.IsNullOrEmpty(subscriber.Name))
+                {
+                    MessageBox.Show("Пользователь не найден");
+                    return;
+                }
+                ReadFromDB readFromDB = new ReadFromDB(this, subscriber);
                 readFromDB.Show();
             }
             else if (!String.IsNullOrEmpty(subPhoneNumberTextBox.Text))
@@ -84,10 +79,14 @@ namespace SubscriptionUserAdministration.Core.Forms
                 String phoneNumber = subPhoneNumberTextBox.Text.Trim();
                 subPhoneNumberTextBox.Clear();
 
-                await QueryHolder.Read(phoneNumber);
-                ReadFromDB readFromDB = new ReadFromDB();
+                var subscriber = QueryHolder.Read(phoneNumber);
+                if (String.IsNullOrEmpty(subscriber.Name))
+                {
+                    MessageBox.Show("Пользователь не найден");
+                    return;
+                }
+                ReadFromDB readFromDB = new ReadFromDB(this, subscriber);
                 readFromDB.Show();
-
             }
             else
             {
@@ -110,7 +109,6 @@ namespace SubscriptionUserAdministration.Core.Forms
                 args.Handled = true;
             }
         }
-
         private void OnlyCharKeyAllowed_KeyPress(Object sender, KeyPressEventArgs args)
         {
             String str = args.KeyChar.ToString();

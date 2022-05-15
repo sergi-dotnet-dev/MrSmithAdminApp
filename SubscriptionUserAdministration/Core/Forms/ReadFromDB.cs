@@ -6,28 +6,22 @@ namespace SubscriptionUserAdministration.Core.Forms;
 
 public sealed partial class ReadFromDB : Form
 {
-    public ReadFromDB()
+    private readonly AdministrationForm administrationForm;
+    private readonly UserModel subscriber;
+    public ReadFromDB(AdministrationForm administrationForm, UserModel subscriber)
     {
         InitializeComponent();
+        this.administrationForm = administrationForm;
+        this.subscriber = subscriber;
         InitializeSubscriber();
     }
-    private async void InitializeSubscriber()
+    private void InitializeSubscriber()
     {
-        if (!File.Exists("subscriber.json"))
-        {
-            MessageBox.Show("Пользователь не найден");
-            return;
-        }
-        using (FileStream fs = new FileStream("subscriber.json", FileMode.Open))
-        {
-            UserModel? sub = await JsonSerializer.DeserializeAsync<UserModel>(fs);
-            idValueLabel.Text = sub.Id.ToString();
-            nameValueLabel.Text = sub.Name;
-            lastNameValueLabel.Text = sub.LastName;
-            phoneNumberValueLabel.Text = sub.PhoneNumber;
-            expiriationDateValueLabel.Text = sub.SubExpiriationDate.ToShortDateString();
-        }
-        File.Delete("subscriber.json");
+        idValueLabel.Text = subscriber.Id.ToString();
+        nameValueLabel.Text = subscriber.Name;
+        lastNameValueLabel.Text = subscriber.LastName;
+        phoneNumberValueLabel.Text = subscriber.PhoneNumber;
+        expiriationDateValueLabel.Text = subscriber.SubExpiriationDate.ToShortDateString();
     }
     private void UpdateButton_Click(object sender, EventArgs args)
     {
@@ -44,23 +38,18 @@ public sealed partial class ReadFromDB : Form
         UserModel subscriber = new UserModel(Convert.ToInt32(idValueLabel.Text), nameValueLabel.Text,
             lastNameValueLabel.Text, phoneNumberValueLabel.Text, Convert.ToDateTime(expiriationDateValueLabel.Text));
 
-        DialogResult dialogResult = MessageBox.Show($"Удалить пользователя?:\n{subscriber.Id}\t{subscriber.Name}\t{subscriber.LastName}", "Подтверждение", MessageBoxButtons.OKCancel);
+        DialogResult dialogResult = MessageBox.Show($"Удалить пользователя?:\n{subscriber.Id}\t{subscriber.Name}\t{subscriber.LastName}",
+            "Подтверждение", MessageBoxButtons.OKCancel);
         if (dialogResult == DialogResult.OK)
         {
             await QueryHolder.Delete(subscriber);
+            await QueryHolder.Push(subscriber.Id);
+
+            administrationForm.UpdateSubCount();
             MessageBox.Show("Пользователь успешно удален");
         }
         Close();
         Dispose();
     }
     private void BackButton_Click(object sender, EventArgs args) => Close();
-
-    private void ReadFromDB_Shown(object sender, EventArgs args)
-    {
-        if (String.IsNullOrEmpty(lastNameValueLabel.Text))
-        {
-            this.DeleteButton.Enabled = false;
-            this.UpdateButton.Enabled = false;
-        }
-    }
 }

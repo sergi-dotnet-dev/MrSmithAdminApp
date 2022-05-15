@@ -175,7 +175,6 @@ sealed partial class ReadFromDB
             this.CenterToScreen();
             this.Name = "ReadFromDB";
             this.Text = "Мистер Смит";
-            this.Shown += new System.EventHandler(this.ReadFromDB_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

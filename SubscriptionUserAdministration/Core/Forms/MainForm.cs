@@ -9,11 +9,6 @@ public partial class MainForm : Form
         InitializeComponent();
     }
 
-    private void MainForm_Load(object sender, EventArgs e)
-    {
-
-    }
-
     private void AcceptButton_Click(object sender, EventArgs args)
     {
         if (loginTextBox.Text.Trim() == Login && passwordTextBox.Text.Trim() == Password)

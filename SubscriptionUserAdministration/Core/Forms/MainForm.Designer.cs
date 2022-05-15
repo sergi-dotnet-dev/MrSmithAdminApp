@@ -98,7 +98,6 @@ partial class MainForm
             this.CenterToScreen();
             this.Name = "MainForm";
             this.Text = "Мистер Смит";
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
