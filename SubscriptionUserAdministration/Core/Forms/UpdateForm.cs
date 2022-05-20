@@ -4,15 +4,14 @@ using System.Text.RegularExpressions;
 
 namespace SubscriptionUserAdministration.Core.Forms
 {
-    public partial class UpdateForm : Form
+    public sealed partial class UpdateForm : Form
     {
-        UserModel sub;
+        private readonly UserModel sub;
         public UpdateForm(UserModel subscriber)
         {
             sub = subscriber;
             InitializeComponent(subscriber);
         }
-
         private async void UpdateButton_Click(object sender, EventArgs args)
         {
             Int32 id = sub.Id;
@@ -22,9 +21,19 @@ namespace SubscriptionUserAdministration.Core.Forms
             DateTime subExpiriationDate = expiriationDateCalendar.SelectionStart;
             Boolean isExpired = sub.IsExpired;
 
-            await QueryHolder.Update(new UserModel(id, name, lastName, phoneNumber, subExpiriationDate, isExpired));
-            MessageBox.Show("Данные успешно обновлены");
-            Close();
+            if (String.IsNullOrEmpty(name) || String.IsNullOrEmpty(lastName) || String.IsNullOrEmpty(phoneNumber))
+            {
+                MessageBox.Show("Все поля должны быть заполнены!","Ошибка ввода");
+                nameTextBox.Text = sub.Name;
+                lastNameTextBox.Text = sub.LastName;
+                phoneNumberTextBox.Text = sub.PhoneNumber;
+            }
+            else
+            {
+                await QueryHolder.Update(new UserModel(id, name, lastName, phoneNumber, subExpiriationDate, isExpired));
+                MessageBox.Show("Данные успешно обновлены");
+                Close();
+            }
         }
         private void BackButton_Click(object sender, EventArgs args) => Close();
         private void DateChangedByUser(object sender, DateRangeEventArgs args)
@@ -44,7 +53,6 @@ namespace SubscriptionUserAdministration.Core.Forms
                 args.Handled = true;
             }
         }
-
         private void OnlyCharKeyAllowed_KeyPress(Object sender, KeyPressEventArgs args)
         {
             String str = args.KeyChar.ToString();

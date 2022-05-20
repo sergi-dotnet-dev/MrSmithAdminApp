@@ -4,7 +4,7 @@
 public sealed class UserModel
 {
 
-    public Int32 Id { get; set; }
+    public Int32 Id { get; private set; }
     public String Name { get; private set; }
     public String LastName { get; private set; }
     public String PhoneNumber { get; private set; }

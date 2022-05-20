@@ -1,6 +1,6 @@
 namespace SubscriptionUserAdministration.Core.Forms;
 
-public partial class MainForm : Form
+public sealed partial class MainForm : Form
 {
     private static readonly string Login = "admin";
     private static readonly string Password = "99118";
